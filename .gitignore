@@ -1,0 +1,8 @@
+SFBlog/SFBlog.Web/obj/
+SFBlog/SFBlog.Web/bin/
+SFBlog/SFBlog.DAL/obj/
+SFBlog/SFBlog.DAL/bin/
+SFBlog/SFBlog.BLL/obj/
+SFBlog/SFBlog.BLL/bin/
+*.suo
+SFBlog/.vs/
