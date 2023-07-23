@@ -31,13 +31,19 @@ var mapperConfig = new MapperConfiguration((m) =>
 IMapper mapper = mapperConfig.CreateMapper();
 
 builder.Services.AddSingleton(mapper)
-                .AddTransient<IHomeService, HomeService>()
-                .AddTransient<ITagRepository, TagRepository>()
-                .AddTransient<ITagService, TagService>()
-                .AddControllersWithViews();
+    .AddTransient<ICommentRepository, CommentRepository>()
+    .AddTransient<IPostRepository, PostRepository>()
+    .AddTransient<ITagRepository, TagRepository>()
+    .AddTransient<IHomeService, HomeService>()
+    .AddTransient<ITagService, TagService>()
+    .AddTransient<IUserService, UserService>()
+    .AddTransient<ICommentService, CommentService>()
+    .AddTransient<IPostService, PostService>()
+    .AddTransient<IRoleService, RoleService>()
+    .AddControllersWithViews();
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+//builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
@@ -54,12 +60,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapRazorPages();
-
-//app.MapControllerRoute(
-//    name: "default",
-//    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

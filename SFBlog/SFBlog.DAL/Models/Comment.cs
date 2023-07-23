@@ -10,9 +10,9 @@ namespace SFBlog.DAL.Models
     {
         public Guid Id { get; set; }
         public string Text { get; set; }
-        public User User { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
         public Post Post { get; set; }
+        public User User { get; set; }
 
     }
 }

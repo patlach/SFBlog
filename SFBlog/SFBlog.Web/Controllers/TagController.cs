@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SFBlog.BLL.Services.IServices;
 using SFBlog.BLL.ViewModel;
 
@@ -6,11 +7,11 @@ namespace SFBlog.Web.Controllers
 {
     public class TagController : Controller
     {
-        private readonly ITagService _tagService;
+        private readonly ITagService tagService;
 
         public TagController(ITagService tagService)
         {
-            _tagService = tagService;
+            this.tagService = tagService;
         }
 
         [Route("Tag/Create")]
@@ -26,7 +27,7 @@ namespace SFBlog.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var tagId = _tagService.CreateTag(model);
+                var tagId = this.tagService.CreateTag(model);
 
                 return RedirectToAction("GetTags", "Tag");
             }
@@ -40,7 +41,7 @@ namespace SFBlog.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> EditTag(Guid id)
         {
-            var tag = await _tagService.EditTag(id);
+            var tag = await this.tagService.EditTag(id);
             return View(tag);
         }
 
@@ -50,7 +51,7 @@ namespace SFBlog.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _tagService.EditTag(model, id);
+                await this.tagService.EditTag(model, id);
 
                 return RedirectToAction("GetTags", "Tag");
             }
@@ -64,8 +65,8 @@ namespace SFBlog.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> RemoveTag(Guid id)
         {
-            var tag = await _tagService.GetTag(id);
-            await _tagService.DeleteTag(id);
+            var tag = await this.tagService.GetTag(id);
+            await this.tagService.DeleteTag(id);
 
             return RedirectToAction("GetTags", "Tag");
         }
@@ -74,7 +75,7 @@ namespace SFBlog.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllTags()
         {
-            var tags = await _tagService.GetAllTags();
+            var tags = await this.tagService.GetAllTags();
 
             return View(tags);
         }

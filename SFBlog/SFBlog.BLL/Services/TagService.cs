@@ -13,36 +13,36 @@ namespace SFBlog.BLL.Services
 {
     public class TagService : ITagService
     {
-        private readonly ITagRepository _repo;
-        private readonly IMapper _mapper;
+        private readonly ITagRepository tagRepository;
+        private readonly IMapper mapper;
 
-        public TagService(ITagRepository repo, IMapper mapper)
+        public TagService(ITagRepository tagRepository, IMapper mapper)
         {
-            _repo = repo;
-            _mapper = mapper;
+            this.tagRepository = tagRepository;
+            this.mapper = mapper;
         }
 
         public async Task<Tag> GetTag(Guid id)
         {
-            return _repo.GetTag(id);
+            return this.tagRepository.GetTag(id);
         }
 
         public async Task<List<Tag>> GetAllTags()
         {
-            return _repo.GetAllTags();
+            return this.tagRepository.GetAllTags();
         }
 
         public async Task<Guid> CreateTag(TagCreateViewModel model)
         {
-            var tag = _mapper.Map<Tag>(model);
-            await _repo.AddTag(tag);
+            var tag = this.mapper.Map<Tag>(model);
+            await this.tagRepository.AddTag(tag);
 
             return tag.Id;
         }
 
         public async Task<TagEditViewModel> EditTag(Guid id)
         {
-            var tag = _repo.GetTag(id);
+            var tag = this.tagRepository.GetTag(id);
             var result = new TagEditViewModel()
             {
                 Name = tag.Name
@@ -53,14 +53,14 @@ namespace SFBlog.BLL.Services
 
         public async Task EditTag(TagEditViewModel model, Guid id)
         {
-            var tag = _repo.GetTag(id);
+            var tag = this.tagRepository.GetTag(id);
             tag.Name = model.Name;
-            await _repo.UpdateTag(tag);
+            await this.tagRepository.UpdateTag(tag);
         }
 
         public async Task DeleteTag(Guid Id)
         {
-            await _repo.DeleteTag(Id);
+            await this.tagRepository.DeleteTag(Id);
         }
     }
 }

@@ -18,5 +18,7 @@ namespace SFBlog.BLL.ViewModel
         [DataType(DataType.Text)]
         [Display(Name = "Описание роли", Prompt = "Описание")]
         public string? Description { get; set; } = null;
+
+        public bool IsSelected { get; set; }
     }
 }
