@@ -73,7 +73,7 @@ namespace SFBlog.Web.Controllers
 
         [Route("Tag/Get")]
         [HttpGet]
-        public async Task<IActionResult> GetAllTags()
+        public async Task<IActionResult> GetTags()
         {
             var tags = await this.tagService.GetAllTags();
 

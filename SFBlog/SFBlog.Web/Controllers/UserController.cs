@@ -16,7 +16,7 @@ namespace SFBlog.Web.Controllers
 
 
         [Route("Account/Get")]
-        [Authorize(Roles = "Admin, Moderator")]
+        //[Authorize(Roles = "Admin, Moderator")]
         public async Task<IActionResult> GetUsers()
         {
             var users = await this.userService.GetUsers();
@@ -25,7 +25,7 @@ namespace SFBlog.Web.Controllers
         }
 
         [Route("Account/Details")]
-        [Authorize(Roles = "Admin, Moderator")]
+        //[Authorize(Roles = "Admin, Moderator")]
         public async Task<IActionResult> GetUser(Guid id)
         {
             var model = await this.userService.GetUser(id);

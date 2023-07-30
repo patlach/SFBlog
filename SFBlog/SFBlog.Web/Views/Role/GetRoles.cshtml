@@ -1,0 +1,18 @@
+﻿@using SFBlog.DAL.Models
+@model List<Role>
+
+@{
+	ViewData["Title"] = "Роли";
+}
+
+<h5 class="card-title">Все Роли</h5>
+<div class="card w-75">
+@foreach (var role in Model)
+{
+	 <h5 class="card-title">@role.Name</h5>
+        <div>
+            <a class="btn btn-outline-info button" method="get" asp-controller="User" asp-action="EditRole" asp-route-id="@role.Id">Редактировать</a>
+            <a class="btn btn-outline-danger button" method="post" asp-controller="User" asp-action="RemoveRole" asp-route-id="@role.Id">Удалить</a>
+        </div>
+}
+</div>

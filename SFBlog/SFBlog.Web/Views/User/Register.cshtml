@@ -1,0 +1,48 @@
+﻿@model SFBlog.BLL.ViewModel.UserRegisterViewModel
+
+@{
+	ViewData["Title"] = "Регистрация";
+}
+
+<div class="container-page">
+	<h2 class="title-margin">Регистрация</h2>
+	<form method="post" asp-controller="User" asp-action="Register">
+		<div style="margin-bottom: 5px">
+			<label asp-for="FirstName"></label><br />
+			<input class="form-control" asp-for="FirstName" />
+			<span asp-validation-for="FirstName" class="text-danger"></span>
+		</div>
+		<div style="margin-bottom: 5px">
+			<label asp-for="LastName"></label><br />
+			<input class="form-control" asp-for="LastName" />
+			<span asp-validation-for="LastName" class="text-danger"></span>
+		</div>
+		<div style="margin-bottom: 5px">
+			<label asp-for="UserName"></label><br />
+			<input class="form-control" asp-for="UserName" />
+			<span asp-validation-for="UserName" class="text-danger"></span>
+		</div>
+		<div style="margin-bottom: 5px">
+			<label asp-for="Email"></label><br />
+			<input class="form-control" asp-for="Email" />
+			<span asp-validation-for="Email" class="text-danger"></span>
+		</div>
+		<div style="margin-bottom: 5px">
+			<label asp-for="Password"></label><br />
+			<input class="form-control" asp-for="Password" />
+			<span asp-validation-for="Password" class="text-danger"></span>
+		</div>
+		<div style="margin-bottom: 5px">
+			<label asp-for="PasswordReg"></label><br />
+			<input class="form-control" asp-for="PasswordReg" />
+			<span asp-validation-for="PasswordReg" class="text-danger"></span>
+		</div>
+		<div style="margin-bottom: 5px">
+			<input class="btn btn-sm btn-primary" type="submit" value="Войти" />
+		</div>
+		<p>
+			<span>Есть аккаунт?</span> 
+			<a method="get" asp-controller="User" asp-action="Register">Вход</a>
+		</p>
+	</form>
+</div>

@@ -1,0 +1,25 @@
+﻿@using SFBlog.DAL.Models
+@model List<Post>
+
+@{
+	ViewData["Title"] = "Посты";
+}
+
+<h5 class="card-title">Все Посты</h5>
+<div class="card w-75">
+@foreach (var post in Model)
+{
+	 <h5 class="card-title">@post.Title</h5>
+     <p>
+         <span>@post.Author</span>
+     </p>
+     <textarea>
+         @post.Text
+     </textarea>
+
+     <div>
+         <a class="btn btn-outline-info button" method="get" asp-controller="Tag" asp-action="EditPost" asp-route-id="@post.Id">Редактировать</a>
+         <a class="btn btn-outline-danger button" method="post" asp-controller="Tag" asp-action="DeletePost" asp-route-id="@post.Id">Удалить</a>
+     </div>
+}
+</div>
