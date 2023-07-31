@@ -9,7 +9,9 @@ namespace SFBlog.BLL.ViewModel
 {
     public class TagCreateViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Укажите название тега")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Название", Prompt = "Название")]
         public string Name { get; set; }
     }
 }

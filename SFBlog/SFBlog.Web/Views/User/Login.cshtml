@@ -5,24 +5,26 @@
 }
 
 <div class="container-page">
-	<h2 class="title-margin">Вход</h2>
-	<form method="post" asp-controller="User" asp-action="Login"> <div asp-validation-summary="All" class="text-danger"></div>
-		<div style="margin-bottom: 5px">
-			<label asp-for="Email"></label><br />
-			<input class="form-control" asp-for="Email" />
-			<span asp-validation-for="Email" class="text-danger"></span>
-		</div>
-		<div style="margin-bottom: 5px">
-			<label asp-for="Password"></label><br />
-			<input class="form-control" asp-for="Password" />
-			<span asp-validation-for="Password" class="text-danger"></span>
-		</div>
-		<div style="margin-bottom: 5px">
-			<input class="btn btn-sm btn-primary" type="submit" value="Войти" />
-		</div>
-		<p>
-			<span>Нет аккаунта?</span> 
-			<a method="get" asp-controller="User" asp-action="Register">Регистрация</a>
-		</p>
-	</form>
+	<div class="col-md-8 col-lg-6 col-xl-4">
+		<h2>Вход</h2>
+		<form class="" method="post" asp-controller="User" asp-action="Login"> 
+			<div class="form-outline mb-3">
+				<label class="form-label" asp-for="Email"></label>
+				<input class="form-control" type="email" asp-for="Email" />
+				<span asp-validation-for="Email" class="text-danger"></span>
+			</div>
+			<div class="form-outline mb-3">
+				<label class="form-label" asp-for="Password"></label>
+				<input class="form-control" type="password" asp-for="Password" />
+				<span asp-validation-for="Password" class="text-danger"></span>
+			</div>
+			<div class="form-outline mb-3">
+				<input class="btn btn-primary" type="submit" value="Войти" />
+			</div>
+			<div class="form-outline mb-3">
+				<span>Нет аккаунта?</span> 
+				<a style="text-decoration:none" method="get" asp-controller="User" asp-action="Register">Регистрация</a>
+			</div>
+		</form>
+	</div>
 </div>

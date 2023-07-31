@@ -5,14 +5,20 @@
 	ViewData["Title"] = "Теги";
 }
 
-<h5 class="card-title">Все теги</h5>
-<div class="card w-75">
+<div class="container-page">
+    <h2>Все теги</h2>
+    <p>
+        <a class="link-primary" style="text-decoration:none" method="get" asp-controller="Tag" asp-action="CreateTag">Добавить тег</a>
+    </p>
+
 @foreach (var tag in Model)
 {
-	 <h5 class="card-title">@tag.Name</h5>
-        <div>
-            <a class="btn btn-outline-info button" method="get" asp-controller="Tag" asp-action="EditTag" asp-route-id="@tag.Id">Редактировать</a>
-            <a class="btn btn-outline-danger button" method="post" asp-controller="Tag" asp-action="DeleteTag" asp-route-id="@tag.Id">Удалить</a>
+    <div class="card col-md-3">
+        <div class="card-body">
+            <h5 class="card-title">@tag.Name</h5>
+            <a class="card-link link-primary" style="text-decoration:none" method="get" asp-controller="Tag" asp-action="EditTag" asp-route-id="@tag.Id">Редактировать</a>
+            <a class="card-link link-danger" style="text-decoration:none" method="post" asp-controller="Tag" asp-action="DeleteTag" asp-route-id="@tag.Id">Удалить</a>
         </div>
+    </div>
 }
 </div>

@@ -1,4 +1,8 @@
-﻿<header>
+﻿@{
+
+}
+
+<header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container">
             <a class="navbar-brand" asp-area="" asp-page="/Index">SFBlog</a>
@@ -21,10 +25,10 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="GetRoles">Роли</a>
                     </li>
                 </ul>
-
-                <a class="btn btn-sm btn-primary" style="margin: 1em;" asp-controller="User" asp-action="Login">Вход</a>
-                <a class="btn btn-sm btn-primary" style="margin: 1em;" asp-controller="User" asp-action="Register">Регистрация</a>
-
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-md-end">
+                    <a class="nav-link text-dark" asp-controller="User" asp-action="Login">Вход</a>
+                    <a class="btn btn-outline-primary btn-sm" asp-controller="User" asp-action="Register">Регистрация</a>
+                </div>
 
             </div>
         </div>
