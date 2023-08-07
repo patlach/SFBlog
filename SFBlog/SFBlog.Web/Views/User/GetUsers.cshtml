@@ -5,25 +5,23 @@
 	ViewData["Title"] = "Пользователи";
 }
 
-<h5 class="card-title">Все пользователи</h5>
-<div class="card w-75">
+<div class="container-page">
+    <h2>Все пользователи</h2>
+    <p>
+        
+    </p>
+</div>
+
 @foreach (var user in Model)
 {
-	 <h5 class="card-title">@user.LastName @user.FirstName</h5>
-        <P>
-            <span>
-                Роли: @user.Roles
-            </span>
-        </P>
-        <P>
-            <span>
-                Посты: @user.Posts
-            </span>
-        </P>
-        <div>
-            <a class="btn btn-outline-info button" method="get" asp-controller="User" asp-action="EditUser" asp-route-id="@user.Id">Редактировать</a>
-            <a class="btn btn-outline-secondary" method="get" asp-controller="User" asp-action="DetailsUser" asp-route-id="@user.Id">Просмотреть</a>
-            <a class="btn btn-outline-danger button" method="post" asp-controller="User" asp-action="RemoveUser" asp-route-id="@user.Id">Удалить</a>
+    <div class="card col col-md-4 col-xs-12 col-sm-6">
+        <div class="card-body">
+            <h5 class="card-title">@user.LastName @user.FirstName</h5>
+            <h6 class="card-subtitle">Роли: </h6>
+            <h6 class="card-subtitle">Посты: </h6>
+            <a class="card-link link-primary" style="text-decoration:none" method="get" asp-controller="User" asp-action="DetailsUser" asp-route-id="@user.Id">Просмотреть</a>
+            <a class="card-link link-primary" style="text-decoration:none" method="get" asp-controller="User" asp-action="EditUser" asp-route-id="@user.Id">Редактировать</a>
+            <a class="card-link link-danger" style="text-decoration:none" method="post" asp-controller="User" asp-action="RemoveUser" asp-route-id="@user.Id">Удалить</a>
         </div>
+    </div>
 }
-</div>

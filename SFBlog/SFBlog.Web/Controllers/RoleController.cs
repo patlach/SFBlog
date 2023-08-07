@@ -68,8 +68,8 @@ namespace SFBlog.Web.Controllers
             }
         }
 
-        [Route("Role/Remove")]
-        [HttpPost]
+        [Route("Role/RemoveRole")]
+        [HttpGet]
         public async Task<IActionResult> RemoveRole(Guid id)
         {
             await this.roleService.RemoveRole(id);

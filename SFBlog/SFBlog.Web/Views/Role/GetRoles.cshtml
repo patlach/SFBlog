@@ -5,14 +5,21 @@
 	ViewData["Title"] = "Роли";
 }
 
-<h5 class="card-title">Все Роли</h5>
-<div class="card w-75">
+<div class="container-page">
+    <h2>Все роли</h2>
+    <p>
+        <a class="link-primary" style="text-decoration:none" method="get" asp-controller="Role" asp-action="CreateRole">Добавить роль</a>
+    </p>
+</div>
+
 @foreach (var role in Model)
 {
-	 <h5 class="card-title">@role.Name</h5>
-        <div>
-            <a class="btn btn-outline-info button" method="get" asp-controller="User" asp-action="EditRole" asp-route-id="@role.Id">Редактировать</a>
-            <a class="btn btn-outline-danger button" method="post" asp-controller="User" asp-action="RemoveRole" asp-route-id="@role.Id">Удалить</a>
+    <div class="card col col-md-4 col-xs-12 col-sm-6">
+        <div class="card-body">
+            <h5 class="card-title">@role.Name</h5>
+            <h6 class="card-subtitle">@role.Description</h6>
+            <a class="card-link link-primary" style="text-decoration:none" method="get" asp-controller="Role" asp-action="EditRole" asp-route-id="@role.Id">Редактировать</a>
+            <a class="card-link link-danger" style="text-decoration:none" method="post" asp-controller="Role" asp-action="RemoveRole" asp-route-id="@role.Id">Удалить</a>
         </div>
+    </div>
 }
-</div>

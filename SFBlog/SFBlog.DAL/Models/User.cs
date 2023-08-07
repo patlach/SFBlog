@@ -13,6 +13,6 @@ namespace SFBlog.DAL.Models
         public string LastName { get; set; }
         public DateTime CreateDate { get; set; } = DateTime.Now;
         public List<Post> Posts { get; set; }
-        public List<Role> Roles { get; set; }
+        public List<Role> Roles { get; set; } = new List<Role>();
     }
 }

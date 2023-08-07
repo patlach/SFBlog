@@ -62,7 +62,7 @@ namespace SFBlog.Web.Controllers
         }
 
         [Route("Tag/Delete")]
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> RemoveTag(Guid id)
         {
             var tag = await this.tagService.GetTag(id);

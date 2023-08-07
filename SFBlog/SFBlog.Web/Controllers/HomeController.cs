@@ -17,7 +17,6 @@ namespace SFBlog.Web.Controllers
 
         public async Task<ActionResult> Index()
         {
-            await this.homeService.GenerateData();
             return View();
         }
 
@@ -30,6 +29,13 @@ namespace SFBlog.Web.Controllers
         [Route("Home/Error")]
         public IActionResult Error()
         {
+            return View();
+        }
+
+        [Route("Home/Create")]
+        public async Task<ActionResult> Create()
+        {
+            await this.homeService.GenerateData();
             return View();
         }
     }

@@ -1,0 +1,36 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model SFBlog.BLL.ViewModel.PostCreateViewModel
+@inject UserManager<IdentityUser> userManager
+
+@{
+	ViewData["Title"] = "Создание поста";
+
+	var user = userManager.GetUserAsync(User);
+	var userId = user?.Id;
+}
+
+
+<div class="container-page">
+	<div class="col-md-12 col-lg-12 col-sm-12 ">
+		<h2>Создание поста</h2>
+		<form class="" method="post" asp-controller="Post" asp-action="CreatePost"> 
+			<span>User: @userId</span>
+			<div class="form-outline mb-3">
+				<label class="form-label" asp-for="Title"></label>
+				<input class="form-control" type="text" asp-for="Title" />
+				<span asp-validation-for="Title" class="text-danger"></span>
+			</div>
+			<div class="form-outline mb-3">
+				<label class="form-label" asp-for="Text"></label>
+				<textarea class="form-control-plaintext" type="text" asp-for="Text"></textarea>
+				<span asp-validation-for="Text" class="text-danger"></span>
+			</div>
+			<div class="form-outline mb-3">
+				<input class="btn btn-primary" type="submit" value="Добавить" />
+			</div>
+			<div class="form-outline mb-3">
+				<a style="text-decoration:none" method="get" asp-controller="Post" asp-action="GetPosts">Перейти к списку всех постов</a>
+			</div>
+		</form>
+	</div>
+</div>

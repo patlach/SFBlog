@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SFBlog.BLL.Services;
+using SFBlog.BLL.Services.IServices;
 using SFBlog.BLL.ViewModel;
 
 namespace SFBlog.Web.Controllers
@@ -15,7 +16,7 @@ namespace SFBlog.Web.Controllers
         }
 
 
-        [Route("Account/Get")]
+        [Route("User/Get")]
         //[Authorize(Roles = "Admin, Moderator")]
         public async Task<IActionResult> GetUsers()
         {
@@ -24,7 +25,7 @@ namespace SFBlog.Web.Controllers
             return View(users);
         }
 
-        [Route("Account/Details")]
+        [Route("User/Details")]
         //[Authorize(Roles = "Admin, Moderator")]
         public async Task<IActionResult> GetUser(Guid id)
         {
@@ -33,14 +34,14 @@ namespace SFBlog.Web.Controllers
             return View(model);
         }
 
-        [Route("Account/Login")]
+        [Route("User/Login")]
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
 
-        [Route("Account/Login")]
+        [Route("User/Login")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(UserLoginViewModel model)
@@ -62,14 +63,20 @@ namespace SFBlog.Web.Controllers
             return View(model);
         }
 
-        [Route("Account/Create")]
+        public async Task<IActionResult> Logout()
+        {
+            await this.userService.Logout();
+            return RedirectToAction("Index", "Home");
+        }
+
+        [Route("User/Create")]
         [HttpGet]
         public IActionResult AddUser()
         {
             return View();
         }
 
-        [Route("Account/Create")]
+        [Route("User/Create")]
         [HttpPost]
         public async Task<IActionResult> AddUser(UserCreateViewModel model)
         {
@@ -92,14 +99,14 @@ namespace SFBlog.Web.Controllers
             return View(model);
         }
 
-        [Route("Account/Register")]
+        [Route("User/Register")]
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
-        [Route("Account/Register")]
+        [Route("User/Register")]
         [HttpPost]
         public async Task<IActionResult> Register(UserRegisterViewModel model)
         {
@@ -122,7 +129,7 @@ namespace SFBlog.Web.Controllers
             return View(model);
         }
 
-        [Route("Account/Edit")]
+        [Route("User/Edit")]
         [HttpGet]
         public async Task<IActionResult> EditUser(Guid id)
         {
@@ -131,26 +138,26 @@ namespace SFBlog.Web.Controllers
             return View(model);
         }
 
-        [Route("Account/Edit")]
+        [Route("User/Edit")]
         [HttpPost]
-        public async Task<IActionResult> EditUser(UserEditViewModel model)
+        public async Task<IActionResult> EditUser(UserEditViewModel model, Guid id)
         {
-            if (ModelState.IsValid)
-            {
-                await this.userService.EditUser(model);
+            //if (ModelState.IsValid)
+            //{
+                await this.userService.EditUser(model, id);
 
                 return RedirectToAction("GetUsers", "User");
-            }
+            //}
 
-            else
-            {
-                return View(model);
-            }
+            //else
+            //{
+            //    return View(model);
+            //}
         }
 
-        [Route("Account/Remove")]
-        [HttpPost]
-        public async Task<IActionResult> DeleteUser(Guid id)
+        [Route("User/Remove")]
+        [HttpGet]
+        public async Task<IActionResult> RemoveUser(Guid id)
         {
             var account = await this.userService.GetUser(id);
 

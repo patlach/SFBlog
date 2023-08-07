@@ -34,6 +34,6 @@ namespace SFBlog.BLL.ViewModel
         [Display(Name = "Пароль")]
         public string? Password { get; set; }
 
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
     }
 }

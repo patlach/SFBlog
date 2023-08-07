@@ -41,26 +41,37 @@ namespace SFBlog.BLL.Services
         {
             var user = this.mapper.Map<User>(model);
 
-            var result = await this.userManager.CreateAsync(user, model.Password);
+            IdentityResult result;
 
-            if (result.Succeeded)
+            try
             {
-                await this.signInManager.SignInAsync(user, false);
+                result = await this.userManager.CreateAsync(user, model.Password);
 
-                var userRole = new Role() { Name = "User", Description = "User Default Role" };
+                if (result.Succeeded)
+                {
+                    await this.signInManager.SignInAsync(user, true);
 
-                await this.roleManager.CreateAsync(userRole);
+                    var userRole = new Role() { Name = "User", Description = "User Default Role" };
 
-                var currentUser = await this.userManager.FindByIdAsync(user.Id.ToString());
+                    await this.roleManager.CreateAsync(userRole);
 
-                await this.userManager.AddToRoleAsync(currentUser, userRole.Name);
+                    var currentUser = await this.userManager.FindByIdAsync(user.Id.ToString());
 
-                return result;
+                    await this.userManager.AddToRoleAsync(currentUser, userRole.Name);
+
+                    return result;
+                }
+                else
+                {
+                    return result;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return result;
+                Console.WriteLine(ex.Message);
             }
+
+            return null;
         }
 
         public async Task<SignInResult> Login(UserLoginViewModel model)
@@ -118,6 +129,8 @@ namespace SFBlog.BLL.Services
 
             var roles = this.roleManager.Roles.ToList();
 
+            var userRoles = await this.userManager.GetRolesAsync(user);
+
             var model = new UserEditViewModel
             {
                 FirstName = user.FirstName,
@@ -126,13 +139,13 @@ namespace SFBlog.BLL.Services
                 Email = user.Email,
                 NewPassword = string.Empty,
                 Id = id,
-                Roles = roles.Select(r => new RoleViewModel() { Id = r.Id, Name = r.Name }).ToList(),
+                Roles = roles.Select(r => new RoleViewModel() { Name = r.Name, IsSelected = userRoles.Contains(r.Name)}).ToList(),
             };
 
             return model;
         }
 
-        public async Task<IdentityResult> EditUser(UserEditViewModel model)
+        public async Task<IdentityResult> EditUser(UserEditViewModel model, Guid id)
         {
             var user = await this.userManager.FindByIdAsync(model.Id.ToString());
 
@@ -159,7 +172,12 @@ namespace SFBlog.BLL.Services
 
             foreach (var role in model.Roles)
             {
-                var roleName = this.roleManager.FindByIdAsync(role.Id.ToString()).Result.Name;
+                var roleName = this.roleManager.FindByNameAsync(role.Name).Result.Name;
+
+                if (roleName != null)
+                {
+
+                }
 
                 if (role.IsSelected)
                 {

@@ -13,7 +13,7 @@ namespace SFBlog.BLL.Services
         Task Logout();
         Task<IdentityResult> CreateUser(UserCreateViewModel model);
         Task<UserEditViewModel> EditUser(Guid id);
-        Task<IdentityResult> EditUser(UserEditViewModel model);
+        Task<IdentityResult> EditUser(UserEditViewModel model, Guid id);
         Task DeleteUser(Guid id);
     }
 }

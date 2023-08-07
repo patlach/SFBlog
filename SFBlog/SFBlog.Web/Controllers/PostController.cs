@@ -70,5 +70,14 @@ namespace SFBlog.Web.Controllers
 
             return View(posts);
         }
+
+        [HttpGet]
+        [Route("Post/Details")]
+        public async Task<IActionResult> GetPost(Guid id)
+        {
+            var post = await this.postService.GetPost(id);
+
+            return View(post);
+        }
     }
 }

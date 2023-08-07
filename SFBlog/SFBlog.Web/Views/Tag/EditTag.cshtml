@@ -1,20 +1,21 @@
-﻿@model SFBlog.BLL.ViewModel.TagCreateViewModel
+﻿@model SFBlog.BLL.ViewModel.TagEditViewModel
 
 @{
-	ViewData["Title"] = "Добавление Тега";
+	ViewData["Title"] = "Редактирование Тега";
 }
 
 <div class="container-page">
 	<div class="col-md-8 col-lg-6 col-xl-4">
-		<h2>Добавление тега</h2>
-		<form class="" method="post" asp-controller="Tag" asp-action="CreateTag"> 
+		<h2>Редактирование тега</h2>
+		<form class="" method="post" asp-controller="Tag" asp-action="EditTag"> 
+			<input type="" asp-for="Id"/>
 			<div class="form-outline mb-3">
 				<label class="form-label" asp-for="Name"></label>
 				<input class="form-control" type="text" asp-for="Name" />
 				<span asp-validation-for="Name" class="text-danger"></span>
 			</div>
 			<div class="form-outline mb-3">
-				<input class="btn btn-primary" type="submit" value="Добавить" />
+				<input class="btn btn-primary" type="submit" value="Изменить" />
 			</div>
 			<div class="form-outline mb-3">
 				<a style="text-decoration:none" method="get" asp-controller="Tag" asp-action="GetTags">Перейти к списку всех тегов</a>
