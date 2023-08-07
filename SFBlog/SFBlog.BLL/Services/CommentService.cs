@@ -37,17 +37,21 @@ namespace SFBlog.BLL.Services
             return this.commentRepository.GetAllComments().ToList();
         }
 
+        public async Task<List<Comment>> GetCommentByPostId(Guid id)
+        {
+            return this.commentRepository.GetAllCommentByPostId(id);
+        }
+
         public async Task<Guid> CreateComment(CommentCreateViewModel model, Guid userId)
         {
             var post = this.postRepository.GetPost(model.PostId);
-            var user = await this.userManager.FindByIdAsync(model.AuthorId.ToString());
 
             var comment = new Comment
             {
                 Id = Guid.NewGuid(),
                 Text = model.Text,
                 Post = post,
-                User = user
+                User = model.User
             };
 
             await this.commentRepository.AddComment(comment);

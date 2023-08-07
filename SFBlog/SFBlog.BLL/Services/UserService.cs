@@ -174,11 +174,6 @@ namespace SFBlog.BLL.Services
             {
                 var roleName = this.roleManager.FindByNameAsync(role.Name).Result.Name;
 
-                if (roleName != null)
-                {
-
-                }
-
                 if (role.IsSelected)
                 {
                     await this.userManager.AddToRoleAsync(user, roleName);

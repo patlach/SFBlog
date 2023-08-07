@@ -1,0 +1,24 @@
+﻿@model SFBlog.BLL.ViewModel.CommentCreateViewModel
+
+@{
+	ViewData["Title"] = "Добавление Комментария";
+}
+
+<div class="container-page">
+	<div class="col-md-8 col-lg-6 col-xl-4">
+		<h2>Добавление комментария</h2>
+		<form class="" method="post" asp-controller="Comment" asp-action="CreateComment" asp-route-id="@Model.PostId" asp-route-name="@User.Identity.Name"> 
+			<div class="form-outline mb-3">
+				<label class="form-label" asp-for="Text"></label>
+				<input class="form-control" type="text" asp-for="Text" />
+				<span asp-validation-for="Text" class="text-danger"></span>
+			</div>
+			<div class="form-outline mb-3">
+				<input class="btn btn-primary" type="submit" value="Добавить" />
+			</div>
+			<div class="form-outline mb-3">
+				<a style="text-decoration:none" method="get" asp-controller="Post" asp-action="GetPost" asp-route-id="@Model.PostId">Перейти к списку всех тегов</a>
+			</div>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,49 @@
+﻿@model SFBlog.BLL.ViewModel.PostViewModel
+
+@{
+	ViewData["Title"] = @Model.Title;
+}
+
+<div class="container-page">
+	<div class="col-md-12 col-lg-12 col-sm-12">
+		<h2 class="card-title">@Model.Title</h2>
+		<div class="form-outline mb-3">
+			<a style="text-decoration:none" method="get" asp-controller="Post" asp-action="GetPosts">Перейти к списку всех постов</a>
+		</div>
+		<div class="card-body">
+			<div class="card-text">@Model.Text</div>
+		</div>
+		<h6 class="card-title">Автор: @Model.User.UserName</h6>
+		<div class="form-outline mb-3">
+			@if (Model.Tags is not null)
+			{
+				<div style="padding: 0.375rem 0.75rem;">
+			    @for (int i = 0; i < Model.Tags.Count; i++)
+			    {
+				    <td>
+					    <lable class="text">#@Model.Tags[i].Name</lable>
+				    </td>
+			    }
+				</div>
+			}
+		</div>
+		<div class="form-outline mb-3">
+			<a style="text-decoration:none" method="get" asp-controller="Comment" asp-action="CreateComment" asp-route-id="@Model.Id">Добавить комментарий</a>
+		</div>
+	</div>
+	@if(Model.Comment is not null)
+	{
+		@foreach(var comment in Model.Comment)
+		{
+			<div class="card col-md-12 col-lg-12 col-sm-12">
+				<div class="card-body">
+					<div class="card-title">@comment.User.UserName</div>
+					<div class="card-subtitle" style="font-size:smaller">@comment.CreatedDate</div>
+					<p class="card-text">@comment.Text</p>
+					<a class="card-link link-primary" style="text-decoration:none" method="get" asp-controller="Comment" asp-action="EditComment" asp-route-id="@comment.Id">Редактировать</a>
+					<a class="card-link link-danger" style="text-decoration:none" method="post" asp-controller="Comment" asp-action="RemoveComment" asp-route-id="@comment.Id">Удалить</a>
+				</div>
+			</div>
+		}	
+	}
+</div>

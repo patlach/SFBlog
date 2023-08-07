@@ -1,4 +1,4 @@
-﻿@model SFBlog.BLL.ViewModel.PostCreateViewModel
+﻿@model SFBlog.BLL.ViewModel.PostEditViewModels
 
 @{
 	ViewData["Title"] = "Создание поста";
@@ -8,8 +8,8 @@
 <div class="container-page">
 	<div class="col-md-12 col-lg-12 col-sm-12 ">
 		<h2>Создание поста</h2>
-		<form class="" method="post" asp-controller="Post" asp-action="CreatePost" asp-route-name="@User.Identity.Name">
-			<input type="" asp-for="Author" value="@User.Identity.Name"/>
+		<form class="" method="post" asp-controller="Post" asp-action="EditPost">
+			<input type="" asp-for="Id"/>
 			<div class="form-outline mb-3">
 				<label class="form-label" asp-for="Tags"></label>
 				@if (Model is not null)
@@ -20,7 +20,7 @@
 					    <td>
 						    @Html.CheckBoxFor(model => model.Tags[i].IsSelected)
 						    <lable class="form-check-label">@Model.Tags[i].Name</lable>
-						    @Html.HiddenFor(model => model.Tags[i].Name)
+						    @Html.HiddenFor(model => model.Tags[i].Id)
 					    </td>
 				    }
 					</div>

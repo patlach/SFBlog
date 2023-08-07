@@ -25,20 +25,22 @@ namespace SFBlog.Web.Controllers
 
         [HttpGet]
         [Route("Comment/CreateComment")]
-        public IActionResult CreateComment(Guid postId)
+        public IActionResult CreateComment(Guid id)
         {
-            var model = new CommentCreateViewModel() { PostId = postId };
+            var model = new CommentCreateViewModel() { PostId = id };
 
             return View(model);
         }
 
         [HttpPost]
         [Route("Comment/CreateComment")]
-        public async Task<IActionResult> CreateComment(CommentCreateViewModel model, Guid postId)
+        public async Task<IActionResult> CreateComment(CommentCreateViewModel model, Guid id, string name)
         {
-            model.PostId = postId;
+            model.PostId = id;
 
-            var user = await this.userManager.FindByNameAsync(User?.Identity?.Name);
+            var user = await this.userManager.FindByNameAsync(name);
+
+            model.User = user;
 
             this.commentService.CreateComment(model, new Guid(user.Id));
 
@@ -72,9 +74,9 @@ namespace SFBlog.Web.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpGet]
         [Route("Comment/Remove")]
-        public async Task<IActionResult> DeleteComment(Guid id)
+        public async Task<IActionResult> RemoveComment(Guid id)
         {
             await this.commentService.DeleteComment(id);
 

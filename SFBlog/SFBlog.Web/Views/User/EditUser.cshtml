@@ -10,6 +10,23 @@
 		<form method="post" asp-controller="User" asp-action="EditUser"> 
 			<input type="" asp-for="Id"/>
 			<div class="form-outline mb-3">
+				<label class="form-label" asp-for="Roles"></label>
+				@if (Model is not null)
+				{
+					<div style="border: 1px solid #ced4da; border-radius: 0.25rem; padding: 0.375rem 0.75rem;">
+				    @for (int i = 0; i < Model.Roles.Count; i++)
+				    {
+					    <td>
+						    @Html.CheckBoxFor(model => model.Roles[i].IsSelected)
+						    <lable class="form-check-label">@Model.Roles[i].Name</lable>
+						    @Html.HiddenFor(model => model.Roles[i].Name)
+					    </td>
+				    }
+					</div>
+				}
+				<span asp-validation-for="Email" class="text-danger"></span><span asp-validation-for="Email" class="text-danger"></span>
+			</div>
+			<div class="form-outline mb-3">
 				<label class="form-label" asp-for="FirstName"></label>
 				<input class="form-control" asp-for="FirstName" />
 				<span asp-validation-for="FirstName" class="text-danger"></span>
@@ -28,25 +45,6 @@
 				<label class="form-label" asp-for="Email"></label>
 				<input class="form-control" type="email" asp-for="Email" />
 				<span asp-validation-for="Email" class="text-danger"></span>
-			</div>
-			<div class="form-outline mb-3">
-				<label class="form-label" asp-for="Roles"></label>
-            @if (Model is not null)
-            {
-                @for (int i = 0; i < Model.Roles.Count; i++)
-			    {
-				    if(i % 3 == 0)
-				    {
-					    @:<tr></tr>
-				    }
-				    <td>
-					    @Html.CheckBoxFor(model => model.Roles[i].IsSelected)
-					    <lable class="tag-margin">@Model.Roles[i].Name</lable>
-					    @Html.HiddenFor(model => model.Roles[i].Name)
-				    </td>
-			    }
-            }
-				<span asp-validation-for="Email" class="text-danger"></span><span asp-validation-for="Email" class="text-danger"></span>
 			</div>
 			<div class="form-outline mb-3">
 				<input class="btn btn-primary" type="submit" value="Сохранить" />

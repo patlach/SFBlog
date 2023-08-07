@@ -12,6 +12,7 @@ namespace SFBlog.BLL.Services.IServices
     {
         Task<Comment> GetComment(Guid id);
         Task<List<Comment>> GetComments();
+        Task<List<Comment>> GetCommentByPostId(Guid id);
         Task<Guid> CreateComment(CommentCreateViewModel model, Guid userId);
         Task<CommentEditViewModel> EditComment(Guid id);
         Task EditComment(CommentEditViewModel model, Guid id);

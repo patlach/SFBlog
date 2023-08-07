@@ -55,15 +55,15 @@ namespace SFBlog.BLL.Services
             return model;
         }
 
-        public async Task<Guid> CreatePost(PostCreateViewModel model)
+        public async Task<Guid> CreatePost(PostCreateViewModel model, string name)
         {
-            var user = await this.userManager.FindByIdAsync(model.Author.ToString());
+            var user = await this.userManager.FindByNameAsync(model.Author);
             var tags = new List<Tag>();
 
             if(model.Tags != null)
             {
-                var modelTags = model.Tags.Select(t => t.Id).ToList();
-                tags = this.tagRepositroy.GetAllTags().Where(t => modelTags.Contains(t.Id)).ToList();
+                var postTags = model.Tags.Where(t => t.IsSelected == true).Select(t => t.Name).ToList();
+                tags = this.tagRepositroy.GetAllTags().Where(t => postTags.Contains(t.Name)).ToList();
             }
 
             var post = new Post
@@ -72,12 +72,14 @@ namespace SFBlog.BLL.Services
                 Title = model.Title,
                 Text = model.Text,
                 Tags = tags,
-                Author = model.Author
+                Author = new Guid(user.Id),
+                User = user
             };
+
+            await this.postRepository.AddPost(post);
 
             user.Posts.Add(post);
             
-            await this.postRepository.AddPost(post);
             await this.userManager.UpdateAsync(user);
 
             return post.Id;
@@ -91,12 +93,15 @@ namespace SFBlog.BLL.Services
 
             foreach (var tag in tags)
             {
-                foreach (var postTag in post.Tags)
+                if(post.Tags != null)
                 {
-                    if (postTag.Id == tag.Id)
+                    foreach (var postTag in post.Tags)
                     {
-                        tag.IsSelected = true;
-                        break;
+                        if (postTag.Id == tag.Id)
+                        {
+                            tag.IsSelected = true;
+                            break;
+                        }
                     }
                 }
             }

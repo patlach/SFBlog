@@ -13,5 +13,7 @@ namespace SFBlog.BLL.ViewModel
         [DataType(DataType.Text)]
         [Display(Name = "Название", Prompt = "Название")]
         public string Name { get; set; }
+
+        public bool IsSelected { get; set; }
     }
 }

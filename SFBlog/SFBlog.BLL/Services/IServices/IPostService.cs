@@ -8,7 +8,7 @@ namespace SFBlog.BLL.Services.IServices
         Task<Post> GetPost(Guid id);
         Task<List<Post>> GetAllPosts();
         Task<PostCreateViewModel> CreatePost();
-        Task<Guid> CreatePost(PostCreateViewModel model);
+        Task<Guid> CreatePost(PostCreateViewModel model, string name);
         Task<PostEditViewModels> EditPost(Guid id);
         Task EditPost(PostEditViewModels model, Guid id);
         Task DeletePost(Guid id);

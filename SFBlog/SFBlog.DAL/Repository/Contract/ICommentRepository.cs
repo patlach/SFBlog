@@ -11,6 +11,7 @@ namespace SFBlog.DAL.Repository.Contract
     {
         Comment GetComment(Guid id);
         List<Comment> GetAllComments();
+        List<Comment> GetAllCommentByPostId(Guid id);
         Task AddComment(Comment comment);
         Task UpdateComment(Comment comment);
         Task DeleteComment(Guid id);

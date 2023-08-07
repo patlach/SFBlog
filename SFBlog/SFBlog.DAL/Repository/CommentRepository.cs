@@ -39,6 +39,11 @@ namespace SFBlog.DAL.Repository
             return this.blogContext.Comments.ToList();
         }
 
+        public List<Comment> GetAllCommentByPostId(Guid id)
+        {
+            return this.blogContext.Comments.Where(x => x.Post.Id == id).ToList();
+        }
+
         public Comment GetComment(Guid id)
         {
             return this.blogContext.Comments.FirstOrDefault(c => c.Id == id);

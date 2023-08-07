@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SFBlog.BLL.Services;
 using SFBlog.BLL.Services.IServices;
 using SFBlog.BLL.ViewModel;
 using SFBlog.DAL.Models;
@@ -10,12 +11,15 @@ namespace SFBlog.Web.Controllers
     public class PostController : Controller
     {
         private readonly IPostService postService;
+        private readonly IUserService userService;
+        private readonly ICommentService commentService;
         private readonly UserManager<User> userManager;
 
-        public PostController(IPostService postService, UserManager<User> userManager)
+        public PostController(IPostService postService, UserManager<User> userManager, ICommentService commentService)
         {
             this.postService = postService;
             this.userManager = userManager;
+            this.commentService = commentService;
         }
 
         [Route("Post/Create")]
@@ -28,9 +32,9 @@ namespace SFBlog.Web.Controllers
 
         [Route("Post/Create")]
         [HttpPost]
-        public async Task<IActionResult> CreatePost(PostCreateViewModel model)
+        public async Task<IActionResult> CreatePost(PostCreateViewModel model, string name)
         {
-            await this.postService.CreatePost(model);
+            await this.postService.CreatePost(model, name);
             
             return RedirectToAction("GetPosts", "Post");
         }
@@ -53,7 +57,7 @@ namespace SFBlog.Web.Controllers
             return RedirectToAction("GetPosts", "Post");
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("Post/Remove")]
         public async Task<IActionResult> RemovePost(Guid id)
         {
@@ -67,8 +71,21 @@ namespace SFBlog.Web.Controllers
         public async Task<IActionResult> GetPosts()
         {
             var posts = await this.postService.GetAllPosts();
+            var users = this.userManager.Users.ToList();
+            List<PostsViewModel> postsList = new List<PostsViewModel>();
 
-            return View(posts);
+            foreach (var post in posts)
+            {
+                postsList.Add(new PostsViewModel
+                {
+                    Id = post.Id,
+                    Title = post.Title,
+                    Text = post.Text,
+                    User = users.Where(x => x.Id.ToLower() == post.Author.ToString().ToLower()).FirstOrDefault(),
+                });
+            }
+
+            return View(postsList);
         }
 
         [HttpGet]
@@ -76,8 +93,20 @@ namespace SFBlog.Web.Controllers
         public async Task<IActionResult> GetPost(Guid id)
         {
             var post = await this.postService.GetPost(id);
+            var user = this.userManager.Users.Where(x => x.Id.ToLower() == post.Author.ToString().ToLower()).FirstOrDefault();
+            var comments = await this.commentService.GetCommentByPostId(id);
 
-            return View(post);
+            PostViewModel postViewModel = new PostViewModel
+            {
+                Id = post.Id,
+                Text = post.Text,
+                Title = post.Title,
+                User = user,
+                Tags = post.Tags,
+                Comment = comments
+            };
+
+            return View(postViewModel);
         }
     }
 }

@@ -7,15 +7,11 @@ using System.Threading.Tasks;
 
 namespace SFBlog.BLL.ViewModel
 {
-    public class PostViewModel
+    public class PostsViewModel
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Text { get; set; }
         public User User { get; set; }
-
-        public List<Tag>? Tags { get; set; }
-
-        public List<Comment>? Comment { get; set; }
     }
 }
