@@ -17,17 +17,11 @@ namespace SFBlog.Web.Controllers
 
         public async Task<ActionResult> Index()
         {
-            return View();
+            return RedirectToAction("GetPosts", "Post");
         }
 
         [Authorize]
         public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [Route("Home/Error")]
-        public IActionResult Error()
         {
             return View();
         }

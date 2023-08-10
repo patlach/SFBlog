@@ -11,5 +11,7 @@ namespace SFBlog.DAL.Models
         public Guid Id { get; set; }
         public string Name { get; set; }
         public bool IsSelected { get; set; }
+
+        public List<Post> Posts { get; set; }
     }
 }

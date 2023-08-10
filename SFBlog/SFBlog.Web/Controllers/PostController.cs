@@ -12,6 +12,7 @@ namespace SFBlog.Web.Controllers
     {
         private readonly IPostService postService;
         private readonly IUserService userService;
+        private readonly ITagService tagService;
         private readonly ICommentService commentService;
         private readonly UserManager<User> userManager;
 
