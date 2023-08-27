@@ -9,14 +9,14 @@ namespace SFBlog.BLL.ViewModel
 {
     public class RoleCreateViewModel
     {
-        [Required(ErrorMessage = "Поле Название обязательно для заполнения")]
+        [Required(ErrorMessage = "Поле \"Имя роли\" обязательно для заполнения")]
+        [Display(Name = "Имя роли")]
         [DataType(DataType.Text)]
-        [Display(Name = "Название", Prompt = "Название")]
         public string? Name { get; set; }
 
-        [Required(ErrorMessage = "Описание обязательно для заполнения")]
+        [Required(ErrorMessage = "Поле \"Описание роли\" обязательно для заполнения")]
+        [Display(Name = "Описание роли")]
         [DataType(DataType.Text)]
-        [Display(Name = "Описание роли", Prompt = "Описание")]
         public string? Description { get; set; }
     }
 }

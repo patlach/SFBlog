@@ -10,7 +10,7 @@ namespace SFBlog.BLL.ViewModel
 {
     public class CommentCreateViewModel
     {
-        [Required(ErrorMessage = "Поле комментарий обязательно для заполнения")]
+        [Required(ErrorMessage = "Поле \"Кмментарий\" обязательно для заполнения")]
         [DataType(DataType.Text)]
         [Display(Name = "Комментарий")]
         public string Text { get; set; }

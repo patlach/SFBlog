@@ -7,6 +7,8 @@ using SFBlog.DAL.Models;
 using SFBlog.DAL.Repository;
 using SFBlog.DAL.Repository.Contract;
 using SFBlog.Web;
+using NLog;
+using NLog.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +43,13 @@ builder.Services.AddSingleton(mapper)
     .AddTransient<IPostService, PostService>()
     .AddTransient<IRoleService, RoleService>()
     .AddControllersWithViews();
+
+builder.Logging
+    .ClearProviders()
+    .SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace)
+    .AddConsole()
+    .AddEventLog()
+    .AddNLog();
 
 // Add services to the container.
 //builder.Services.AddRazorPages();

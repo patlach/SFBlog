@@ -11,7 +11,8 @@ namespace SFBlog.BLL.ViewModel
     {
         public Guid Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Поле \"Имя тега\" обязательно для заполнения")]
+        [Display(Name = "Имя тега")]
         public string Name { get; set; }
         public bool IsSelected { get; set; }
     }

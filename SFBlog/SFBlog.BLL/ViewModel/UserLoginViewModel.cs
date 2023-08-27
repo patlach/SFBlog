@@ -9,12 +9,12 @@ namespace SFBlog.BLL.ViewModel
 {
     public class UserLoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Поле Email обязательно для заполнения")]
         [EmailAddress]
         [Display(Name = "Email", Prompt = "Введите email")]
         public string? Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = $"Поле \"Пароль\" обязательно для заполнения")]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль", Prompt = "Введите пароль")]
         public string? Password { get; set; }

@@ -3,16 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 using SFBlog.BLL.Services;
 using SFBlog.BLL.Services.IServices;
 using SFBlog.BLL.ViewModel;
+using NLog;
 
 namespace SFBlog.Web.Controllers
 {
     public class UserController : Controller
     {
         private readonly IUserService userService;
+        private readonly ILogger<UserController> logger;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, ILogger<UserController> logger)
         {
             this.userService = userService;
+            this.logger = logger;
         }
 
 
@@ -52,6 +55,7 @@ namespace SFBlog.Web.Controllers
 
                 if (result.Succeeded)
                 {
+                    this.logger.LogInformation($"Вход пользователя {model.Email}");
                     return RedirectToAction("Index", "Home");
                 }
 
@@ -116,6 +120,7 @@ namespace SFBlog.Web.Controllers
 
                 if (result.Succeeded)
                 {
+                    this.logger.LogInformation($"Пользователь {model.UserName} был зарегистрирован");
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -142,26 +147,30 @@ namespace SFBlog.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> EditUser(UserEditViewModel model, Guid id)
         {
-            //if (ModelState.IsValid)
-            //{
+            if (ModelState.IsValid)
+            {
                 await this.userService.EditUser(model, id);
 
-                return RedirectToAction("GetUsers", "User");
-            //}
+                this.logger.LogInformation($"Пользователь {model.UserName}, {id} был отредактироавн");
 
-            //else
-            //{
-            //    return View(model);
-            //}
+                return RedirectToAction("GetUsers", "User");
+            }
+
+            else
+            {
+                return View(model);
+            }
         }
 
         [Route("User/Remove")]
         [HttpGet]
         public async Task<IActionResult> RemoveUser(Guid id)
         {
-            var account = await this.userService.GetUser(id);
+            //var account = await this.userService.GetUser(id);
 
             await this.userService.DeleteUser(id);
+
+            this.logger.LogInformation($"Пользователь с {id} был удален");
 
             return RedirectToAction("GetUsers", "User");
         }

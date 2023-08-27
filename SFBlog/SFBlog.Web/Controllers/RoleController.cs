@@ -33,8 +33,6 @@ namespace SFBlog.Web.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "Некорректные данные");
-
                 return View(model);
             }
         }
@@ -62,8 +60,6 @@ namespace SFBlog.Web.Controllers
             }
             else
             {
-                ModelState.AddModelError("", "Некорректные данные");
-
                 return View(model);
             }
         }

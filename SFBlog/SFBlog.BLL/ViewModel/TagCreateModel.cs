@@ -9,9 +9,9 @@ namespace SFBlog.BLL.ViewModel
 {
     public class TagCreateViewModel
     {
-        [Required(ErrorMessage = "Укажите название тега")]
+        [Required(ErrorMessage = "Поле \"Имя тега\" обязательно для заполнения")]
+        [Display(Name = "Имя тега")]
         [DataType(DataType.Text)]
-        [Display(Name = "Название", Prompt = "Название")]
         public string Name { get; set; }
 
         public bool IsSelected { get; set; }

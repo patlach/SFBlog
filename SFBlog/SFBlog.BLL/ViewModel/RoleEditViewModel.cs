@@ -11,12 +11,14 @@ namespace SFBlog.BLL.ViewModel
     {
         public Guid Id { get; set; }
 
+        [Required(ErrorMessage = "Поле \"Имя роли\" обязательно для заполнения")]
+        [Display(Name = "Имя роли")]
         [DataType(DataType.Text)]
-        [Display(Name = "Название", Prompt = "Название")]
         public string? Name { get; set; }
 
+        [Required(ErrorMessage = "Поле \"Описание роли\" обязательно для заполнения")]
+        [Display(Name = "Описание роли")]
         [DataType(DataType.Text)]
-        [Display(Name = "Описание роли", Prompt = "Описание")]
         public string? Description { get; set; } = null;
 
         public bool IsSelected { get; set; }

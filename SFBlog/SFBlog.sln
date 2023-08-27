@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFBlog.Web", "SFBlog.Web\SFBlog.Web.csproj", "{D6CFD8D8-0480-44D7-8813-BCB83A043E89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFBlog.Web", "SFBlog.Web\SFBlog.Web.csproj", "{D6CFD8D8-0480-44D7-8813-BCB83A043E89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFBlog.DAL", "SFBlog.DAL\SFBlog.DAL.csproj", "{D173B444-30D0-4534-B00E-295B94321084}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFBlog.DAL", "SFBlog.DAL\SFBlog.DAL.csproj", "{D173B444-30D0-4534-B00E-295B94321084}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFBlog.BLL", "SFBlog.BLL\SFBlog.BLL.csproj", "{5D7B3565-27CA-439B-A1AA-183A699FB950}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFBlog.BLL", "SFBlog.BLL\SFBlog.BLL.csproj", "{5D7B3565-27CA-439B-A1AA-183A699FB950}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

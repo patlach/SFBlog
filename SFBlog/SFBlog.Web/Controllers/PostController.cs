@@ -5,6 +5,7 @@ using SFBlog.BLL.Services;
 using SFBlog.BLL.Services.IServices;
 using SFBlog.BLL.ViewModel;
 using SFBlog.DAL.Models;
+using NLog;
 
 namespace SFBlog.Web.Controllers
 {
@@ -15,12 +16,14 @@ namespace SFBlog.Web.Controllers
         private readonly ITagService tagService;
         private readonly ICommentService commentService;
         private readonly UserManager<User> userManager;
+        private readonly ILogger<PostController> logger;
 
-        public PostController(IPostService postService, UserManager<User> userManager, ICommentService commentService)
+        public PostController(IPostService postService, UserManager<User> userManager, ICommentService commentService, ILogger<PostController> logger)
         {
             this.postService = postService;
             this.userManager = userManager;
             this.commentService = commentService;
+            this.logger = logger;
         }
 
         [Route("Post/Create")]
@@ -35,9 +38,16 @@ namespace SFBlog.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePost(PostCreateViewModel model, string name)
         {
-            await this.postService.CreatePost(model, name);
-            
-            return RedirectToAction("GetPosts", "Post");
+            if (ModelState.IsValid)
+            {
+                await this.postService.CreatePost(model, name);
+                this.logger.LogInformation($"{model.Title} был создан");
+                return RedirectToAction("GetPosts", "Post");
+            }
+            else
+            {
+                return View(model);
+            }
         }
 
         [Route("Post/Edit")]
@@ -53,9 +63,16 @@ namespace SFBlog.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> EditPost(PostEditViewModels model, Guid Id)
         {
-            await this.postService.EditPost(model, Id);
-
-            return RedirectToAction("GetPosts", "Post");
+            if (!string.IsNullOrEmpty(model.Title) && !string.IsNullOrEmpty(model.Text))
+            {
+                await this.postService.EditPost(model, Id);
+                this.logger.LogInformation($"{model.Title} был отредактирован");
+                return RedirectToAction("GetPosts", "Post");
+            }
+            else
+            {
+                return View(model);
+            }
         }
 
         [HttpGet]
@@ -63,7 +80,7 @@ namespace SFBlog.Web.Controllers
         public async Task<IActionResult> RemovePost(Guid id)
         {
             await this.postService.DeletePost(id);
-
+            this.logger.LogInformation($"Пост с {id} был удален");
             return RedirectToAction("GetPosts", "Post");
         }
 
