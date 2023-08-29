@@ -18,6 +18,8 @@ namespace SFBlog.BLL.Services.IServices
 
         Task<List<Role>> GetRoles();
 
+        Task<List<RolesViewModel>> GetAllRoles();
+
         Task<Role?> GetRole(Guid id);
     }
 }

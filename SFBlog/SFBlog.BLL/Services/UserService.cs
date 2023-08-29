@@ -32,6 +32,22 @@ namespace SFBlog.BLL.Services
             return await this.userManager.FindByIdAsync(id.ToString());
         }
 
+        public async Task<UserViewModel> GetUserById(Guid id)
+        {
+            var user = await this.userManager.FindByIdAsync(id.ToString());
+            
+            var userModel = new UserViewModel
+            {
+                Id = user.Id,
+                LastName = user.LastName,
+                FirstName = user.FirstName,
+                UserName = user.UserName,
+                Email = user.Email
+            };
+
+            return userModel;
+        }
+
         public async Task<List<User>> GetUsers()
         {
             return this.userManager.Users.ToList();

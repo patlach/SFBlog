@@ -2,7 +2,7 @@
 using SFBlog.BLL.ViewModel;
 using SFBlog.DAL.Models;
 
-namespace SFBlog.Web
+namespace SFBlog.API
 {
     public class MappingProfile : Profile
     {
@@ -11,15 +11,7 @@ namespace SFBlog.Web
             CreateMap<UserRegisterViewModel, User>()
                 .ForMember(x => x.Email, opt => opt.MapFrom(c => c.Email))
                 .ForMember(x => x.UserName, opt => opt.MapFrom(c => c.UserName));
-            CreateMap<TagCreateViewModel, Tag>();
-            CreateMap<TagEditViewModel, Tag>();
-            CreateMap<CommentEditViewModel, Comment>();
-            CreateMap<CommentCreateViewModel, Comment>();
-            CreateMap<PostCreateViewModel, Post>();
-            CreateMap<PostEditViewModels, Post>();
-            CreateMap<UserEditViewModel, User>();
             CreateMap<UserViewModel, User>();
-            CreateMap<User, UserViewModel>();
         }
     }
 }

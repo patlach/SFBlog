@@ -15,5 +15,6 @@ namespace SFBlog.BLL.Services
         Task<UserEditViewModel> EditUser(Guid id);
         Task<IdentityResult> EditUser(UserEditViewModel model, Guid id);
         Task DeleteUser(Guid id);
+        Task<UserViewModel> GetUserById(Guid id);
     }
 }

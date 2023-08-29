@@ -174,7 +174,5 @@ namespace SFBlog.Web.Controllers
 
             return RedirectToAction("GetUsers", "User");
         }
-
-
     }
 }

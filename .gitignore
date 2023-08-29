@@ -6,3 +6,5 @@ SFBlog/SFBlog.BLL/obj/
 SFBlog/SFBlog.BLL/bin/
 *.suo
 SFBlog/.vs/
+SFBlog/SFBlog.API/bin/
+SFBlog/SFBlog.API/obj/

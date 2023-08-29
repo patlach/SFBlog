@@ -59,6 +59,25 @@ namespace SFBlog.BLL.Services
             return this.roleManager.Roles.ToList();
         }
 
+        public async Task<List<RolesViewModel>> GetAllRoles()
+        {
+            var rolesModel = new List<RolesViewModel>();
+
+            var roles = this.roleManager.Roles.ToList();
+
+            foreach (var role in roles)
+            {
+                rolesModel.Add(new RolesViewModel
+                {
+                    Id = role.Id,
+                    Name = role.Name,
+                    Description = role.Description,
+                });
+            }
+
+            return rolesModel;
+        }
+
         public async Task<Role?> GetRole(Guid id)
         {
             return await this.roleManager.FindByIdAsync(id.ToString());
