@@ -58,7 +58,7 @@ namespace SFBlog.API.Controllers
 
             if (result.Succeeded)
             {
-                return StatusCode(201);
+                return StatusCode(200);
             }
             else
             {

@@ -3,8 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SFBlog.API;
 using SFBlog.BLL.Services;
+using SFBlog.BLL.Services.IServices;
 using SFBlog.DAL;
 using SFBlog.DAL.Models;
+using SFBlog.DAL.Repository;
+using SFBlog.DAL.Repository.Contract;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,7 +50,15 @@ var mapperConfig = new MapperConfiguration((m) =>
 IMapper mapper = mapperConfig.CreateMapper();
 
 builder.Services.AddSingleton(mapper)
-    .AddScoped<IUserService, UserService>();
+    .AddTransient<ICommentRepository, CommentRepository>()
+    .AddTransient<IPostRepository, PostRepository>()
+    .AddTransient<ITagRepository, TagRepository>()
+    .AddTransient<IHomeService, HomeService>()
+    .AddTransient<ITagService, TagService>()
+    .AddTransient<IUserService, UserService>()
+    .AddTransient<ICommentService, CommentService>()
+    .AddTransient<IPostService, PostService>()
+    .AddTransient<IRoleService, RoleService>();
 
 
 var app = builder.Build();
