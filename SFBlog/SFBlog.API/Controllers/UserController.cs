@@ -1,7 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using SFBlog.BLL.Services;
 using SFBlog.BLL.ViewModel;
 using SFBlog.DAL.Models;
+using System.Security.Authentication;
+using System.Security.Claims;
 
 namespace SFBlog.API.Controllers
 {
@@ -10,10 +15,12 @@ namespace SFBlog.API.Controllers
     public class UserController : Controller
     {
         private readonly IUserService userService;
+        private readonly UserManager<User> userManager;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, UserManager<User> userManager)
         {
             this.userService = userService;
+            this.userManager = userManager;
         }
 
         /// <summary>
@@ -54,16 +61,45 @@ namespace SFBlog.API.Controllers
         [Route("Login")]
         public async Task<IActionResult> Login(UserLoginViewModel model)
         {
+            if (string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Password))
+            {
+                throw new ArgumentNullException("Введены не корректные данные");
+            }
+
             var result = await this.userService.Login(model);
 
-            if (result.Succeeded)
+            if (!result.Succeeded)
             {
-                return StatusCode(200);
+                throw new AuthenticationException("Аккаунт не найден");
+            }
+
+            var user = await this.userManager.FindByEmailAsync(model.Email);
+            var roles = await this.userManager.GetRolesAsync(user);
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim(ClaimTypes.Name, user.UserName),
+            };
+
+            if (roles.Contains("Admin"))
+            {
+                claims.Add(new Claim(ClaimsIdentity.DefaultRoleClaimType, "Admin"));
             }
             else
             {
-                return StatusCode(204);
+                claims.Add(new Claim(ClaimsIdentity.DefaultRoleClaimType, roles.FirstOrDefault()));
             }
+
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var authProperties = new AuthenticationProperties
+            {
+                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(60)
+            };
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+            return StatusCode(200);
         }
 
         /// <summary>
@@ -74,8 +110,10 @@ namespace SFBlog.API.Controllers
         [Route("Logout")]
         public async Task<IActionResult> Logout()
         {
+            await HttpContext.SignOutAsync();
             await this.userService.Logout();
-            return StatusCode(201);
+
+            return StatusCode(200);
         }
 
         /// <summary>

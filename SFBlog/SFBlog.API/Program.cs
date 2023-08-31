@@ -60,6 +60,18 @@ builder.Services.AddSingleton(mapper)
     .AddTransient<IPostService, PostService>()
     .AddTransient<IRoleService, RoleService>();
 
+builder.Services.AddAuthentication(optionts => optionts.DefaultScheme = "Cookies")
+    .AddCookie("Cookies", options =>
+    {
+        options.Events = new Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationEvents
+        {
+            OnRedirectToLogin = redirectContext =>
+            {
+                redirectContext.HttpContext.Response.StatusCode = 401;
+                return Task.CompletedTask;
+            }
+        };
+    });
 
 var app = builder.Build();
 
@@ -72,6 +84,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
